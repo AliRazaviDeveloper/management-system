@@ -1,5 +1,5 @@
-const { Schema, model } = require('mongoose')
-const userModel = new Schema(
+const { Schema, model, default: mongoose } = require('mongoose')
+const userSchema = new Schema(
   {
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
@@ -7,6 +7,18 @@ const userModel = new Schema(
     password: { type: String, required: true },
     first_name: { type: String, required: false },
     last_name: { type: String, required: false },
+    skills: { type: Array, default: [] },
+    role: {
+      type: String,
+      default: 'USER',
+      required: true,
+      enum: ['USER', 'ADMIN', 'DEVELOPER'],
+    },
+    teams: {
+      type: [mongoose.Types.ObjectId],
+      default: [],
+      ref: 'team',
+    },
     avatar: {
       type: String,
       required: false,
@@ -23,4 +35,6 @@ const userModel = new Schema(
   }
 )
 
-module.exports = new model('User', userModel)
+const userModel = new model('User', userSchema)
+
+module.exports = userModel
