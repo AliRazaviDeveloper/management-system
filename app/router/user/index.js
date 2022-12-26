@@ -1,8 +1,9 @@
 const userController = require('../../controllers/userController')
+const checkAuth = require('../../middlewares/checkAuth')
 
 const userRouter = require('express').Router()
 
-userRouter.get('/', userController.index)
+userRouter.get('/', checkAuth, userController.index)
 userRouter.post('/', userController.store)
 
 module.exports = userRouter

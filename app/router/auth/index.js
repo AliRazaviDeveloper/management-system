@@ -1,6 +1,9 @@
 const authController = require('../../controllers/authController')
 const checkValidation = require('../../middlewares/validation')
-const { registerValidation } = require('../../validations/auth')
+const {
+  registerValidation,
+  loginValidation,
+} = require('../../validations/auth')
 
 const authRouter = require('express').Router()
 
@@ -11,6 +14,11 @@ authRouter.post(
   authController.register
 )
 
-authRouter.post('/login', authController.login)
+authRouter.post(
+  '/login',
+  loginValidation(),
+  checkValidation,
+  authController.login
+)
 
 module.exports = authRouter

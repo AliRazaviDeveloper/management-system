@@ -12,5 +12,5 @@ const startDbConnection = () => {
     `${process.env.DB_URL}:${process.env.DB_PORT}/${process.env.DB_NAME}`
   )
 }
-
+mongoose.set('strictQuery', true)
 module.exports = startDbConnection

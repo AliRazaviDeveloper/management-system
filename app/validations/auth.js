@@ -11,7 +11,7 @@ const registerValidation = () => {
       .withMessage('نام کاربری باید شامل اعداد و حروف باشد .')
       .bail()
       .custom(async (value, ctx) => {
-        const user = await userModel.find({ username: value.username })
+        const user = await userModel.findOne({ username: value.username })
         if (user) throw 'نام کاربری قبلا در سیستم ثبت شده است .'
       })
       .trim()
@@ -25,7 +25,7 @@ const registerValidation = () => {
       .withMessage('ایمیل نمی تواند خالی باشد . ')
       .bail()
       .custom(async (value, ctx) => {
-        const user = await userModel.find({ email: value.username })
+        const user = await userModel.findOne({ email: value.email })
         if (user) throw ' ایمیل قبلا در سیستم ثبت شده است .'
       }),
 
@@ -37,7 +37,7 @@ const registerValidation = () => {
       .withMessage('موبایل نمی تواند خالی باشد . ')
       .bail()
       .custom(async (value, ctx) => {
-        const user = await userModel.find({ phone: value.username })
+        const user = await userModel.findOne({ phone: value.phone })
         if (user) throw ' موبایل قبلا در سیستم ثبت شده است .'
       }),
     body('password')
@@ -56,6 +56,27 @@ const registerValidation = () => {
   ]
 }
 
+const loginValidation = () => {
+  return [
+    body('email')
+      .isEmail()
+      .withMessage('ایمیل باید با فرمت صحیح وارد شود .')
+      .bail()
+      .notEmpty()
+      .withMessage('ایمیل نمی تواند خالی باشد . ')
+      .bail(),
+
+    body('password')
+      .notEmpty()
+      .withMessage('پسورد نباید خالی باشد .')
+      .bail()
+      .isLength({ min: 8 })
+      .withMessage('طول فیلد پسورد باید بیشتر از ۸ کارکتر باشد .')
+      .bail(),
+  ]
+}
+
 module.exports = {
   registerValidation,
+  loginValidation,
 }
