@@ -2,8 +2,8 @@ const express = require('express')
 class Application {
   #app = express()
   constructor(port) {
-    this.createServer(port)
     this.createConfig()
+    this.createServer(port)
     this.createRouter()
     this.createErrorHandler()
   }

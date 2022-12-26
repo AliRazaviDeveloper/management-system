@@ -1,0 +1,61 @@
+const { body } = require('express-validator')
+const userModel = require('../model/userModel')
+
+const registerValidation = () => {
+  return [
+    body('username')
+      .isLength({ min: 5, max: 21 })
+      .withMessage('طول نام کاربری باید بین ۵ تا ۲۱ کارکتر باشد .')
+      .bail()
+      .isAlphanumeric()
+      .withMessage('نام کاربری باید شامل اعداد و حروف باشد .')
+      .bail()
+      .custom(async (value, ctx) => {
+        const user = await userModel.find({ username: value.username })
+        if (user) throw 'نام کاربری قبلا در سیستم ثبت شده است .'
+      })
+      .trim()
+      .bail(),
+
+    body('email')
+      .isEmail()
+      .withMessage('ایمیل باید با فرمت صحیح وارد شود .')
+      .bail()
+      .notEmpty()
+      .withMessage('ایمیل نمی تواند خالی باشد . ')
+      .bail()
+      .custom(async (value, ctx) => {
+        const user = await userModel.find({ email: value.username })
+        if (user) throw ' ایمیل قبلا در سیستم ثبت شده است .'
+      }),
+
+    body('phone')
+      .isMobilePhone('fa-IR')
+      .withMessage('موبایل باید با فرمت صحیح وارد شود .')
+      .bail()
+      .notEmpty()
+      .withMessage('موبایل نمی تواند خالی باشد . ')
+      .bail()
+      .custom(async (value, ctx) => {
+        const user = await userModel.find({ phone: value.username })
+        if (user) throw ' موبایل قبلا در سیستم ثبت شده است .'
+      }),
+    body('password')
+      .notEmpty()
+      .withMessage('پسورد نباید خالی باشد .')
+      .bail()
+      .isLength({ min: 8 })
+      .withMessage('طول فیلد پسورد باید بیشتر از ۸ کارکتر باشد .')
+      .bail()
+      .custom((value, ctx) => {
+        if (value !== ctx.req.body.confirm_password)
+          throw 'فیلد پسورد با تکرار پسورد یکسان نیست . '
+        return true
+      })
+      .bail(),
+  ]
+}
+
+module.exports = {
+  registerValidation,
+}
