@@ -1,4 +1,5 @@
 const userModel = require('../model/userModel')
+const { uploadFileImage } = require('../utility/upload')
 
 class ProfileController {
   async editProfile(req, res, next) {
@@ -46,21 +47,12 @@ class ProfileController {
 
   async uploadProfile(req, res, next) {
     try {
-      console.log(req.file)
       const userID = req.user._id
-      const pathImage = req.file.path
-      if (Object.keys(req.file).length == 0)
-        throw {
-          status: 400,
-          success: false,
-          message: 'لطفا یک عکس برای اپلود انتخاب کنید ',
-        }
-      const pathFile = pathImage.split('public')[1]
       const result = await userModel.updateOne(
         { _id: userID },
         {
           $set: {
-            avatar: pathFile,
+            avatar: uploadFileImage(req.file),
           },
         }
       )

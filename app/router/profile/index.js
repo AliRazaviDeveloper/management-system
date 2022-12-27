@@ -1,7 +1,7 @@
 const profileController = require('../../controllers/profileController')
 const checkAuth = require('../../middlewares/checkAuth')
 const checkValidation = require('../../middlewares/validation')
-const multerUploadImage = require('../../utility/upload')
+const { multerUploadImage } = require('../../utility/upload')
 const { avatarValidation } = require('../../validations/user')
 
 const profileRouter = require('express').Router()

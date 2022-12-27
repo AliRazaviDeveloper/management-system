@@ -21,6 +21,21 @@ const storage = multer.diskStorage({
   },
 })
 
+const uploadFileImage = (file) => {
+  const pathImage = file.path
+  if (Object.keys(file).length == 0)
+    throw {
+      status: 400,
+      success: false,
+      message: 'لطفا یک عکس برای اپلود انتخاب کنید ',
+    }
+  const pathFile = pathImage.split('public')[1]
+  return pathFile
+}
+
 const multerUploadImage = multer({ storage })
 
-module.exports = multerUploadImage
+module.exports = {
+  multerUploadImage,
+  uploadFileImage,
+}

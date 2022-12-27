@@ -6,7 +6,6 @@ const avatarValidation = () => {
       .withMessage('عکس نمی تواند خالی باشد . ')
       .bail()
       .custom((value, ctx) => {
-        console.log(ctx.req.file)
         const whiteListExt = ['.png', '.jpg', '.jpeg']
         const ext = require('path').extname(ctx.req.file.originalname)
 

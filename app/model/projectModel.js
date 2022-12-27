@@ -2,7 +2,7 @@ const { Schema, model, default: mongoose } = require('mongoose')
 const projectSchema = new Schema(
   {
     title: { type: String, required: true },
-    description: { type: Text, required: true },
+    description: { type: String, required: true },
     owner: {
       type: mongoose.Types.ObjectId,
       required: true,
@@ -11,21 +11,22 @@ const projectSchema = new Schema(
     },
     team: {
       type: mongoose.Types.ObjectId,
-      required: true,
       ref: 'team',
-      default: [],
     },
 
     image: {
       type: String,
       required: false,
-      default: '/public/image/default.png',
+      default: '/uploads/project/default.png',
     },
     status: {
       type: String,
       required: true,
       default: 'DRAFT',
       enum: ['DRAFT', 'PUBLISH', 'UNPUBLISH'],
+    },
+    tags: {
+      type: [String],
     },
   },
   {
