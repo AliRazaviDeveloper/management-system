@@ -22,7 +22,7 @@ const userSchema = new Schema(
     avatar: {
       type: String,
       required: false,
-      default: '/public/image/avatar.png',
+      default: '/image/avatar.png',
     },
     token: {
       type: String,

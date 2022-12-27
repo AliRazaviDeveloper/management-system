@@ -9,6 +9,7 @@ class UserController {
           __v: 0,
         }
       )
+
       res.json(200, {
         result: users,
         status: 200,

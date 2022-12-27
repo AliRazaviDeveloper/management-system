@@ -4,6 +4,7 @@ const {
   registerValidation,
   loginValidation,
 } = require('../../validations/auth')
+const { avatarValidation } = require('../../validations/user')
 
 const authRouter = require('express').Router()
 
