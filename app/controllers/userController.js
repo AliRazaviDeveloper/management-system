@@ -39,6 +39,14 @@ class UserController {
       next(error)
     }
   }
+
+  async invitesAll(req, res, next) {
+    try {
+      const result = await userModel.find({ _id: req.user._id })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = new UserController()

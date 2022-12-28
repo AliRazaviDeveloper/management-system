@@ -1,4 +1,5 @@
 const { Schema, model, default: mongoose } = require('mongoose')
+
 const teamSchema = new Schema(
   {
     title: { type: String, required: true, unique: true },

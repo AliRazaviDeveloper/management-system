@@ -12,5 +12,9 @@ teamRouter.post(
   checkValidation,
   teamController.store
 )
+teamRouter.get('/me', checkAuth, teamController.getMeTeams)
+teamRouter.get('/invite/:teamId/:userId', checkAuth, teamController.inviteUser)
+teamRouter.get('/:id', checkAuth, checkValidation, teamController.findById)
+teamRouter.delete('/:id', checkAuth, checkValidation, teamController.remove)
 
 module.exports = teamRouter

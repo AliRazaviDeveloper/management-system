@@ -1,4 +1,11 @@
 const { Schema, model, default: mongoose } = require('mongoose')
+const inviteSchema = new Schema({
+  sent: { type: mongoose.Types.ObjectId, ref: 'user', required: true },
+  caller: { type: mongoose.Types.ObjectId, ref: 'user', required: true },
+  teamId: { type: mongoose.Types.ObjectId, ref: 'team', required: true },
+  status: { type: String, default: 'pending' },
+  sentDate: { type: Date, default: Date.now() },
+})
 const userSchema = new Schema(
   {
     username: { type: String, required: true, unique: true },
@@ -24,6 +31,8 @@ const userSchema = new Schema(
       required: false,
       default: '/image/avatar.png',
     },
+
+    inviteRequest: { type: [inviteSchema], default: [] },
     token: {
       type: String,
       required: false,
