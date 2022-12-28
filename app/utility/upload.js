@@ -33,9 +33,14 @@ const uploadFileImage = (file) => {
   return pathFile
 }
 
+const createLinkImage = (req, path) => {
+  return `http://${req.get('host')}${path}`
+}
+
 const multerUploadImage = multer({ storage })
 
 module.exports = {
   multerUploadImage,
   uploadFileImage,
+  createLinkImage,
 }
