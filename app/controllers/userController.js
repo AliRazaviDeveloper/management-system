@@ -42,7 +42,16 @@ class UserController {
 
   async invitesAll(req, res, next) {
     try {
-      const result = await userModel.find({ _id: req.user._id })
+      const result = await userModel.findOne(
+        { _id: req.user._id },
+        { inviteRequest: 1 }
+      )
+
+      res.status(200).json({
+        status: 200,
+        result: result || [],
+        success: true,
+      })
     } catch (error) {
       next(error)
     }
