@@ -1,12 +1,12 @@
-const { Schema, model, default: mongoose } = require('mongoose')
-const inviteSchema = new Schema({
+const { mongoose } = require('mongoose')
+const inviteSchema = new mongoose.Schema({
   sent: { type: mongoose.Types.ObjectId, ref: 'user', required: true },
   caller: { type: mongoose.Types.ObjectId, ref: 'user', required: true },
   teamId: { type: mongoose.Types.ObjectId, ref: 'team', required: true },
   status: { type: String, default: 'pending' },
   sentDate: { type: Date, default: Date.now() },
 })
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
   {
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
@@ -44,6 +44,6 @@ const userSchema = new Schema(
   }
 )
 
-const userModel = new model('User', userSchema)
+const userModel = mongoose.model('User', userSchema)
 
 module.exports = userModel
